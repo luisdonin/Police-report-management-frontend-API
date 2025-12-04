@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delegacia - Página Inicial</title>
+</head>
+<body>
+<!-- Navbar fragment to be reused across templates -->
+<nav th:fragment="navbar" class="navbar">
+    <div class="brand">Registro BO</div>
+    <ul class="nav-links">
+        <li><a th:href="@{/}" class="nav-link">Novo boletim</a></li>
+        <li><a th:href="@{/boletim}" class="nav-link">Lista de boletins</a></li>
+    </ul>
+</nav>
+
+<!-- Frontpage fragment: seção inicial da delegacia (pt-BR) -->
+<section th:fragment="frontpage" class="frontpage" >
+    <div class="container">
+        <h1>Twin Peaks Sherrif's Department</h1>
+        <p class="frontpage-lead">Bem-vindo. Esta é a página de atendimento para registro de Boletins de Ocorrência. Nossa missão é acolher, registrar e orientar a população com segurança e respeito.</p>
+        <div class="frontpage-contact">
+            <p><strong>Endereço:</strong> Rua da Justiça, 123 - Centro</p>
+            <p><strong>Telefone:</strong> (00) 1234-5678</p>
+            <p><strong>Horário de Atendimento:</strong> 24 horas / 7 dias por semana</p>
+        </div>
+        <div style="text-align:center; margin-top:16px;">
+            <a th:href="@{/#form}" class="frontpage-cta">Registrar novo boletim</a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

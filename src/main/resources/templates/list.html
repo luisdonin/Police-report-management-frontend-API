@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Boletins</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- use navbar fragment -->
+<div th:replace="fragments :: navbar"></div>
+
+<div class="container">
+    <h1>Lista de Boletins</h1>
+
+    <div class="boletins">
+        <div class="boletim" th:each="u : ${usuarios}">
+            <h3 class="boletim-titulo">Boletim: <span th:text="${u.numeroBoletimOriginal}">Envolvimento</span></h3>
+
+            <div class="boletim-field">
+                <strong>Nome:</strong>
+                <span th:text="${u.maskedNome}">Nome</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>E-mail:</strong>
+                <span th:text="${u.getMaskedEmail}">Email</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Idade:</strong>
+                <span th:text="${u.idade}">Idade</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Veículo:</strong>
+                <span th:text="${u.veiculo}">Veiculo</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Placa:</strong>
+                <span th:text="${u.getMaskedEmplacamento}">Placa</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Logradouro:</strong>
+                <span th:text="${u.getMaskedLogradouroOcorrencia}">Rua</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Bairro:</strong>
+                <span th:text="${u.getMaskedBairroOcorrencia}">Bairro</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Cidade:</strong>
+                <span th:text="${u.getMaskedCidadeOcorrencia}">Cidade</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Estado:</strong>
+                <span th:text="${u.estadoOcorrencia}">Estado</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Período da Ocorrência:</strong>
+                <span th:text="${u.periodoOcorrencia}">Período</span>
+            </div>
+
+            <div class="boletim-field">
+                <strong>Cor do Veículo:</strong>
+                <span th:text="${u.corVeiculo}">Cor</span>
+            </div>
+
+<!--            <div class="boletim-field">-->
+<!--                <strong>Tipo do Veículo:</strong>-->
+<!--                <span th:text="${u.tipoVeiculo}">Tipo</span>-->
+<!--            </div>-->
+
+            <div class="boletim-actions" style="margin-top:12px; text-align:right;">
+                <a th:if="${u.id != null}"
+                   th:href="@{/boletim/editar/{id}(id=${u.id})}"
+                   class="btn btn-sm btn-primary boletim-edit-btn"
+                   title="Editar"
+                   style="border:2px;box-shadow: 0 6px 12px rgba(0,0,0,0.4); border-color: #8b6f47;text-decoration: none; padding: 10px; color:#fff;background-color:#5c2f16;">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Editar
+                </a>
+                <a th:if="${u.id != null}"
+                   th:href="@{/boletim/remover/{id}(id=${u.id})}"
+                   class="btn btn-sm btn-primary boletim-edit-btn"
+                   title="remover"
+                   style="border:2px;box-shadow: 0 6px 12px rgba(0,0,0,0.4); border-color: #8b6f47;text-decoration: none; padding: 10px; color:#fff;background-color:#5c2f16;margin: 2px;">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Remover
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- pagination controls -->
+    <div class="pagination" style="margin:16px; text-align:center;">
+        <div th:if="${totalItems == 0}">Nenhum boletim encontrado.</div>
+
+        <div th:if="${totalItems > 0}">
+            <div style="margin-bottom:8px;">Página <span th:text="${currentPage}">1</span> de <span th:text="${totalPages}">1</span> — <span th:text="${totalItems}">0</span> itens</div>
+
+            <a th:if="${currentPage > 1}"
+               th:href="@{/boletim(page=${currentPage - 1},size=${pageSize})}"
+               style="margin:0 6px; text-decoration:none; padding:6px 10px; background:#eee; border-radius:4px; color:#333;">Prev</a>
+            <span th:if="${currentPage == 1}" style="margin:0 6px; padding:6px 10px; background:#ddd; border-radius:4px; color:#999;">Prev</span>
+
+            <span th:each="p : ${#numbers.sequence(1, totalPages/110)}" style="margin:3px;">
+                <a th:if="${p != currentPage}"
+                   th:href="@{/boletim(page=${p},size=${pageSize})}"
+                   th:text="${p}"
+                   style="text-decoration:none; padding:6px 10px; background:#fff; border:1px solid #ccc; border-radius:4px; color:#333;"></a>
+                <span th:if="${p == currentPage}"
+                      th:text="${p}"
+                      style="text-decoration:none; padding:6px 10px; background:#5c2f16; border-radius:4px; color:#fff;"></span>
+            </span>
+
+            <a th:if="${currentPage < totalPages}"
+               th:href="@{/boletim(page=${currentPage + 1},size=${pageSize})}"
+               style="margin:0 6px; text-decoration:none; padding:6px 10px; background:#eee; border-radius:4px; color:#333;">Next</a>
+            <span th:if="${currentPage >= totalPages}" style="margin:0 6px; padding:6px 10px; background:#ddd; border-radius:4px; color:#999;">Next</span>
+        </div>
+    </div>
+
+    <div style="margin:10px;">
+        <a th:href="@{/}" style="margin: 10px; text-decoration:none; padding:10px; background-color:#5c2f16; color:#fff; border-radius:4px;">Registrar novo boletim</a>
+    </div>
+
+</div>
+</body>
+</html>

@@ -2,35 +2,30 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Boletim de Ocorrencia</title>
+    <title>Editar Boletim de Ocorrencia</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <!-- use navbar fragment -->
 <div th:replace="fragments :: navbar"></div>
 
-<!-- use frontpage fragment -->
-<div th:replace="fragments :: frontpage"></div>
-
-
-
-
-
-
-
-
-
 <div class="container">
-    <h1>Registro de Boletim de Ocorrencia</h1>
-    <form id="form" th:action="@{/boletim/salvar}" th:object="${usuario}" method="post">
+    <h1>Editar Boletim de Ocorrencia</h1>
+
+    <form th:action="@{/boletim/atualizar}" th:object="${usuario}" method="post">
+        <!-- hidden id field required by backend PUT endpoint -->
+        <input type="hidden" th:field="*{id}" />
+
         <div class="form-group">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}" required />
         </div>
+
         <div class="form-group">
             <label for="email">E-mail:</label>
             <input type="email" id="email" th:field="*{email}" required />
         </div>
+
         <div class="form-group">
             <label for="idade">Idade:</label>
             <input type="text" id="idade" th:field="*{idade}" required />
@@ -55,6 +50,7 @@
             <label for="logradouro">Logradouro:</label>
             <input type="text" id="logradouro" th:field="*{logradouroOcorrencia}" required />
         </div>
+
         <div class="form-group">
             <label for="bairro">Bairro:</label>
             <input type="text" id="bairro" th:field="*{bairroOcorrencia}" required />
@@ -97,17 +93,53 @@
             </select>
         </div>
 
-        <button type="submit">Salvar</button>
+        <div style="margin-top:12px;">
+            <button type="submit">Atualizar</button>
+            <a th:href="@{/}" style="margin-left:12px; text-decoration:none;">Cancelar</a>
+        </div>
     </form>
 
     <hr />
 
-    <div style="margin-top:12px;">
-        <a th:href="@{/boletim}" style="text-decoration:none; padding:10px; background-color:#5c2f16; color:#fff; border-radius:4px;">Ver lista de boletins</a>
+    <h2>Lista de Boletins</h2>
+    <div class="boletins">
+        <div class="boletim" th:each="u : ${usuarios}">
+            <h3 class="boletim-titulo">Boletim: <span th:text="${u.envolvimento}">Envolvimento</span></h3>
+            <div class="boletim-field">
+                <strong>Veículo:</strong>
+                <span th:text="${u.veiculo}">Veiculo</span>
+            </div>
+            <div class="boletim-field">
+                <strong>Placa:</strong>
+                <span th:text="${u.emplacamento}">Placa</span>
+            </div>
+            <div class="boletim-field">
+                <strong>Logradouro:</strong>
+                <span th:text="${u.logradouroOcorrencia}">Rua</span>
+            </div>
+            <div class="boletim-field">
+                <strong>Bairro:</strong>
+                <span th:text="${u.bairroOcorrencia}">Bairro</span>
+            </div>
+            <div class="boletim-field">
+                <strong>Cidade:</strong>
+                <span th:text="${u.cidadeOcorrencia}">Cidade</span>
+            </div>
+            <div class="boletim-field">
+                <strong>Estado:</strong>
+                <span th:text="${u.estadoOcorrencia}">Estado</span>
+            </div>
+            <div class="boletim-actions" style="margin-top:12px; text-align:right;">
+                <a th:if="${u.id != null}"
+                   th:href="@{/boletim/editar/{id}(id=${u.id})}"
+                   class="btn btn-sm btn-primary boletim-edit-btn"
+                   title="Editar usuário"
+                   style="border:2px;box-shadow: 0 6px 12px rgba(0,0,0,0.4); border-color: #8b6f47;text-decoration: none; padding: 10px; color:#fff;background-color:#5c2f16;">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Editar
+                </a>
+            </div>
+        </div>
     </div>
-
-
-
 
 </div>
 </body>
