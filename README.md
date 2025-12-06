@@ -17,3 +17,6 @@ Data persistence is handled with MongoDB using JPA MongoRepository.
 <img width="1353" height="802" alt="image" src="https://github.com/user-attachments/assets/d9f74a6d-c961-48e8-91b8-09d1f1a28932" />
 
 <img width="1353" height="800" alt="image" src="https://github.com/user-attachments/assets/9a799fe9-fcf5-459a-b950-41c64fac0cf4" />
+
+## Project Structure
+<img width="832" height="1072" alt="delegacia drawio" src="https://github.com/user-attachments/assets/d975b507-951f-4cc5-b036-765e2c60afda" />
